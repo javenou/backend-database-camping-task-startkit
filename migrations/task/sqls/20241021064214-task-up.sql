@@ -327,7 +327,7 @@ order by "COACH".experience_years desc;
 -- 顯示須包含以下欄位： 專長名稱, coach_total
 SELECT
     "SKILL".name AS "專長名稱"
-    count(*) AS coach_total
+    COUNT(*) AS coach_total
 from "COACH_LINK_SKILL"
 inner JOIN "SKILL" on "SKILL".id = "COACH_LINK_SKILL".skill_id
 group by "SKILL".name
@@ -340,7 +340,7 @@ limit 1;
 
 SELECT
     "CREDIT_PACKAGE".name AS "組合包方案名稱",
-    count(*) AS "銷售數量"
+    COUNT(*) AS "銷售數量"
 FROM "CREDIT_PURCHASE"
 inner JOIN "CREDIT_PACKAGE" on "CREDIT_PACKAGE".id = "CREDIT_PURCHASE".credit_package_id
 WHERE "CREDIT_PURCHASE".created_at >= '2024-11-01 00:00:00' 
@@ -363,5 +363,5 @@ AND "CREDIT_PURCHASE".purchase_at <= '2024-11-30 23:59:59';
 SELECT COUNT(Distinct("COURSE_BOOKING".user_id)) AS "預約會員人數"
 FROM "COURSE_BOOKING"
 WHERE "COURSE_BOOKING".created_at >= '2024-11-01 00:00:00'
-AND "COURSE_BOOKIN".created_at <= '2024-11-30 23:59:59'
-AND "COURSE_BOOKIN".status != '課程已取消';
+AND "COURSE_BOOKING".created_at <= '2024-11-30 23:59:59'
+AND "COURSE_BOOKING".status != '課程已取消';
