@@ -75,7 +75,6 @@ INSERT INTO "CREDIT_PURCHASE" (user_id, credit_package_id, purchased_credits, pr
   (SELECT credit_amount FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案'),
   (SELECT price FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案')
 )
-
 INSERT INTO "CREDIT_PURCHASE" (user_id, credit_package_id, purchased_credits, price_paid) VALUES
 (
   (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io'),
@@ -83,7 +82,6 @@ INSERT INTO "CREDIT_PURCHASE" (user_id, credit_package_id, purchased_credits, pr
   (SELECT credit_amount FROM "CREDIT_PACKAGE" WHERE name = '21 堂組合包方案'),
   (SELECT price FROM "CREDIT_PACKAGE" WHERE name = '21 堂組合包方案')
 )
-
 INSERT INTO "CREDIT_PURCHASE" (user_id, credit_package_id, purchased_credits, price_paid) VALUES
 (
   (SELECT id FROM "USER" WHERE email = 'richman@hexschooltest.io'),
@@ -116,27 +114,27 @@ INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES
 (
 	(SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE email = 'lee2000@hexschooltest.io')),
   (SELECT id FROM "SKILL" WHERE name = '重訓') 
-);
+)
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES
 (
 	(SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE email = 'muscle@hexschooltest.io')),
   (SELECT id FROM "SKILL" WHERE name = '重訓') 
-);
+)
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES
 (
 	(SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE email = 'starplatinum@hexschooltest.io')),
   (SELECT id FROM "SKILL" WHERE name = '重訓') 
-);
+)
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES
 (
 	(SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE email = 'muscle@hexschooltest.io')),
   (SELECT id FROM "SKILL" WHERE name = '瑜伽') 
-);
+)
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES
 (
 	(SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE email = 'starplatinum@hexschooltest.io')),
   (SELECT id FROM "SKILL" WHERE name = '有氧運動') 
-);
+)
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES
 (
 	(SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE email = 'starplatinum@hexschooltest.io')),
