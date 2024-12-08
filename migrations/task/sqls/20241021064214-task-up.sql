@@ -213,14 +213,33 @@ INSERT INTO "COURSE" (user_id, skill_id, name, start_at, end_at, max_participant
         -- 1. 預約人設為 `好野人`
         -- 2. 預約時間`booking_at` 設為2024-11-24 16:00:00
         -- 3. 狀態`status` 設定為即將授課
-
+INSERT INTO "COURSE_BOOKING" (user_id, course_id, booking_at, status) VALUES
+(
+	(SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io'),
+  (SELECT id FROM "COURSE" WHERE user_id = 
+  	(SELECT id FROM "USER" WHERE email = 'lee2000@hexschooltest.io')),
+  '2024-11-24 16:00:00',
+  '即將授課'
+),
+(
+	(SELECT id FROM "USER" WHERE email = 'richman@hexschooltest.io'),
+  (SELECT id FROM "COURSE" WHERE user_id = 
+  	(SELECT id FROM "USER" WHERE email = 'lee2000@hexschooltest.io')),
+  '2024-11-24 16:00:00',
+  '即將授課'
+);
 
 
 -- 5-2. 修改：`王小明`取消預約 `李燕容` 的課程，請在`COURSE_BOOKING`更新該筆預約資料：
     -- 1. 取消預約時間`cancelled_at` 設為2024-11-24 17:00:00
     -- 2. 狀態`status` 設定為課程已取消
 
-
+UPDATE "COURSE_BOOKING"
+SET cancelled_at = '2024-11-24 17:00:00', status = '課程已取消'
+WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
+AND course_id = (SELECT id FROM "COURSE" WHERE user_id =
+                	(SELECT id FROM "USER" WHERE email = 'lee2000@hexschooltest.io')
+                );
 
 
 -- 5-3. 新增：`王小明`再次預約 `李燕容`   的課程，請在`COURSE_BOOKING`新增一筆資料：
@@ -228,20 +247,52 @@ INSERT INTO "COURSE" (user_id, skill_id, name, start_at, end_at, max_participant
     -- 2. 預約時間`booking_at` 設為2024-11-24 17:10:25
     -- 3. 狀態`status` 設定為即將授課
 
-
+INSERT INTO "COURSE_BOOKING" (user_id, course_id, booking_at, status) VALUES
+(
+	(SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io'),
+  (SELECT id FROM "COURSE" WHERE user_id = 
+  	(SELECT id FROM "USER" WHERE email = 'lee2000@hexschooltest.io')),
+  '2024-11-24 17:10:25',
+  '即將授課'
+);
 
 -- 5-4. 查詢：取得王小明所有的預約紀錄，包含取消預約的紀錄
 
-
+SELECT *
+FROM "COURSE_BOOKING"
+WHERE user_id = (
+    SELECT id
+    FROM "USER"
+    WHERE email = 'wXlTq@hexschooltest.io'
+);
 
 -- 5-5. 修改：`王小明` 現在已經加入直播室了，請在`COURSE_BOOKING`更新該筆預約資料（請注意，不要更新到已經取消的紀錄）：
     -- 1. 請在該筆預約記錄他的加入直播室時間 `join_at` 設為2024-11-25 14:01:59
     -- 2. 狀態`status` 設定為上課中
 
-
+UPDATE "COURSE_BOOKING" set join_at = '2024-11-25 14:01:59', status = '上課中'
+WHERE user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
+AND course_id = (SELECT id FROM "COURSE" WHERE user_id =
+    (SELECT id FROM "USER" WHERE email = 'lee2000@hexschooltest.io')
+)
+AND status = '即將授課';
 
 -- 5-6. 查詢：計算用戶王小明的購買堂數，顯示須包含以下欄位： user_id , total。 (需使用到 SUM 函式與 Group By)
 
+SELECT
+"CREDIT_PURCHASE".user_id,
+SUM("CREDIT_PURCHASE".purchased_credits) as tatal
+    FROM "CREDIT_PURCHASE"
+    WHERE "CREDIT_PURCHASE".user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
+    group by "CREDIT_PURCHASE".user_id;
+
+-- 5-7. 查詢：計算用戶王小明的已使用堂數，顯示須包含以下欄位： user_id , total。 (需使用到 Count 函式與 Group By)
+SELECT "COURSE_BOOKING".user_id,
+    count(*) AS tatal
+    FROM "COURSE_BOOKING"
+    WHERE "COURSE_BOOKING".user_id = (SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io')
+    AND status != '課程已取消'
+group by "COURSE_BOOKING".user_id;
 
 -- 5-8. [挑戰題] 查詢：請在一次查詢中，計算用戶王小明的剩餘可用堂數，顯示須包含以下欄位： user_id , remaining_credit
     -- 提示：
