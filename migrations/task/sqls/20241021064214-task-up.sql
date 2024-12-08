@@ -326,7 +326,7 @@ order by "COACH".experience_years desc;
 -- 6-2 查詢：查詢每種專長的教練數量，並只列出教練數量最多的專長（需使用 group by, inner join 與 order by 與 limit 語法）
 -- 顯示須包含以下欄位： 專長名稱, coach_total
 SELECT
-    "SKILL".name AS "專長名稱"
+    "SKILL".name AS "專長名稱",
     COUNT(*) AS coach_total
 from "COACH_LINK_SKILL"
 inner JOIN "SKILL" on "SKILL".id = "COACH_LINK_SKILL".skill_id
